@@ -1,4 +1,4 @@
-package com.bardelorean.crud.service;
+package com.bardelorean.crud.repository;
 
 import com.bardelorean.crud.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

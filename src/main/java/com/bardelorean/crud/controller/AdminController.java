@@ -2,7 +2,7 @@ package com.bardelorean.crud.controller;
 
 import com.bardelorean.crud.model.Role;
 import com.bardelorean.crud.model.User;
-import com.bardelorean.crud.service.UserRepository;
+import com.bardelorean.crud.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

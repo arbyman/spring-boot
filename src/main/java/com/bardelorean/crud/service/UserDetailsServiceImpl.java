@@ -1,6 +1,7 @@
 package com.bardelorean.crud.service;
 
 import com.bardelorean.crud.model.User;
+import com.bardelorean.crud.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
