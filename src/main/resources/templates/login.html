@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Login page</title>
+    <link th:href="@{bootstrap/css/bootstrap.min.css}" href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <script th:src="@{jquery/jquery.min.js}" href="../jquery/jquery.min.js" ></script>
+    <script th:src="@{popper/popper.min.js}" href="../popper/popper.min.js" ></script>
+    <script th:src="@{bootstrap/js/bootstrap.min.js}" href="../bootstrap/js/bootstrap.min.js" ></script>
 </head>
 <body>
-<form th:action="@{/login}" method="POST">
-    <label for="j_username">Login: </label>
-    <input type="text" id="j_username" name="j_username">
-    <label for="j_password">Password: </label>
-    <input type="password"  id="j_password" name ="j_password">
-    <input type="submit" value="login">
-</form>
+<div class="container-fluid">
+    <div class="row">
+        <form th:action="@{/login}" method="POST">
+            <div class="form-group">
+                <label for="j_username">Email address</label>
+                <input type="text" class="form-control" id="j_username" name="j_username" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="j_password">Password</label>
+                <input type="password" class="form-control" id="j_password" name ="j_password" placeholder="Password">
+            </div>
+<!--            <div class="form-group form-check">-->
+<!--                <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+<!--                <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+<!--            </div>-->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>
