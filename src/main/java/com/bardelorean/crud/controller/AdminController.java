@@ -2,6 +2,7 @@ package com.bardelorean.crud.controller;
 
 import com.bardelorean.crud.model.User;
 import com.bardelorean.crud.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,11 @@ import java.util.List;
 public class AdminController {
 
 	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
 
-	public AdminController(UserService userService) {
+	public AdminController(UserService userService, PasswordEncoder passwordEncoder) {
 		this.userService = userService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@GetMapping
@@ -45,6 +48,7 @@ public class AdminController {
 
 	@PostMapping(value = "/new")
 	public String addUser(@ModelAttribute("user") User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.save(user);
 		return "redirect:/admin";
 	}
@@ -58,6 +62,7 @@ public class AdminController {
 
 	@PatchMapping(value = "/edit/{id}")
 	public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.save(user);
 		return "redirect:/admin";
 	}
