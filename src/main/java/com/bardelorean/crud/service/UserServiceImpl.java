@@ -21,6 +21,10 @@ public class UserServiceImpl implements UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
@@ -42,8 +46,22 @@ public class UserServiceImpl implements UserService {
 
 	public void save(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setRoles(getRoles(user.getIsAdmin()));
 		userRepository.save(user);
+	}
+
+	@Override
+	public void update(User user, long id) {
+		System.out.println("Передан юзер");
+		System.out.println(user);
+		System.out.println(user.getId());
+		User oldUser = findById(id);
+		oldUser.setUsername(user.getUsername());
+		oldUser.setLastname(user.getLastname());
+		oldUser.setAge(user.getAge());
+		oldUser.setRoles(user.getRoles());
+		oldUser.setEmail(user.getEmail());
+		oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		save(oldUser);
 	}
 
 	private Set<Role> getRoles(String admin) {

@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
 										HttpServletResponse httpServletResponse,
@@ -22,9 +21,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		if (roles.contains("ROLE_ADMIN")) {
 			httpServletResponse.sendRedirect("/admin");
 		} else if (roles.contains("ROLE_USER")) {
-			User user = (User) authentication.getPrincipal();
-			Long id = user.getId();
-			httpServletResponse.sendRedirect("/user/" + id);
+//			User user = (User) authentication.getPrincipal();
+//			Long id = user.getId();
+			httpServletResponse.sendRedirect("/user");
 		}
 	}
 }

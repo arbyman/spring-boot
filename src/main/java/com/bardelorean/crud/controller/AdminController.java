@@ -1,12 +1,16 @@
 package com.bardelorean.crud.controller;
 
+import com.bardelorean.crud.model.Role;
 import com.bardelorean.crud.model.User;
 import com.bardelorean.crud.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -19,9 +23,11 @@ public class AdminController {
 	}
 
 	@GetMapping
-	public String showAllUsers(Model model) {
+	public String showAllUsers(@ModelAttribute("user") User user, Model model, Principal principal) {
+		User currentUser = userService.findByUsername(principal.getName());
 		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
+		model.addAttribute("current", currentUser);
 		return "index";
 	}
 
@@ -32,8 +38,14 @@ public class AdminController {
 		return "show";
 	}
 
+	@GetMapping(value = "get/{id}")
+	@ResponseBody
+	public User getUser(@PathVariable("id") long id) {
+		return userService.findById(id);
+	}
+
 	@DeleteMapping(value = "/delete/{id}")
-	public String deleteUserById(@PathVariable long id) {
+	public String deleteUserById(@PathVariable("id") long id) {
 		userService.deleteById(id);
 		return "redirect:/admin";
 	}
@@ -45,6 +57,7 @@ public class AdminController {
 
 	@PostMapping(value = "/new")
 	public String addUser(@ModelAttribute("user") User user) {
+		System.out.println(user.getRoles());
 		userService.save(user);
 		return "redirect:/admin";
 	}
@@ -57,8 +70,10 @@ public class AdminController {
 	}
 
 	@PatchMapping(value = "/edit/{id}")
-	public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-		userService.save(user);
+	public String updateUser(@PathVariable("id") long id, @ModelAttribute("user") User user) {
+		System.out.println("Получен юзер");
+		System.out.println(user);
+		userService.update(user, id);
 		return "redirect:/admin";
 	}
 }

@@ -5,18 +5,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private String username;
-
+	private String lastname;
+	@Column(nullable = false, unique = true)
+	private String email;
 	private byte age;
-
+	@Column(nullable = false)
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -32,11 +35,14 @@ public class User implements UserDetails {
 	public User() {
 	}
 
-	public User(String username, byte age, String password, Set<Role> roles) {
+	public User(String username, String lastname, String email, byte age, String password, Set<Role> roles, String isAdmin) {
 		this.username = username;
-		this.password = password;
+		this.lastname = lastname;
+		this.email = email;
 		this.age = age;
+		this.password = password;
 		this.roles = roles;
+		this.isAdmin = isAdmin;
 	}
 
 	public String getIsAdmin() {
@@ -102,6 +108,22 @@ public class User implements UserDetails {
 		return password;
 	}
 
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -116,6 +138,22 @@ public class User implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "Name: " + getUsername() + ", Age: " + getAge();
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", lastname='" + lastname + '\'' +
+				", email='" + email + '\'' +
+				", age=" + age +
+				", password='" + password + '\'' +
+				", roles=" + roles +
+				'}';
+	}
+
+	public String getRolesToString() {
+		return getRoles()
+				.stream()
+				.map(Objects::toString)
+				.sorted()
+				.collect(Collectors.joining(" "));
 	}
 }
