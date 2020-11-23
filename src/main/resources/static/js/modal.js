@@ -1,6 +1,6 @@
 const editHandler = async (e) => {
-    const href = e.currentTarget.getAttribute("href");
-    const response = await fetch(href);
+    const link = e.currentTarget.getAttribute("href");
+    const response = await fetch(link);
     if (response.ok) {
         const user = await response.json();
         const { id, username, lastname, age, email } = user;
@@ -17,8 +17,8 @@ const editHandler = async (e) => {
 }
 
 const deleteHandler = async (e) => {
-    const href = e.currentTarget.getAttribute("href");
-    const response = await fetch(href);
+    const link = e.currentTarget.getAttribute("href");
+    const response = await fetch(link);
     if (response.ok) {
         const user = await response.json();
         const { id, username, lastname, age, email } = user;

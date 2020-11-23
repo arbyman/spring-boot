@@ -1,6 +1,5 @@
 package com.bardelorean.crud.controller;
 
-import com.bardelorean.crud.model.Role;
 import com.bardelorean.crud.model.User;
 import com.bardelorean.crud.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -8,9 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,12 +33,6 @@ public class AdminController {
 		User user = userService.findById(id);
 		model.addAttribute("user", user);
 		return "show";
-	}
-
-	@GetMapping(value = "get/{id}")
-	@ResponseBody
-	public User getUser(@PathVariable("id") long id) {
-		return userService.findById(id);
 	}
 
 	@DeleteMapping(value = "/delete/{id}")
