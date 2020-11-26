@@ -1,5 +1,6 @@
 package com.bardelorean.crud.controller;
 
+import com.bardelorean.crud.model.Role;
 import com.bardelorean.crud.model.User;
 import com.bardelorean.crud.service.UserService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -28,6 +31,10 @@ public class UserController {
 
 	@GetMapping
 	public String index() {
+//		Set<Role> roles = new HashSet<>();
+//		roles.add(new Role("ROLE_ADMIN"));
+//		User admin = new User("admin", "admin", "admin@mail.ru", (byte) 33, "pass", roles, "ADMIN");
+//		userService.save(admin);
 		return "redirect:/login";
 	}
 
@@ -38,7 +45,6 @@ public class UserController {
 				&& authentication.isAuthenticated()
 				&& !(authentication instanceof AnonymousAuthenticationToken)) {
 			User user = (User) authentication.getPrincipal();
-			long id = user.getId();
 			return "redirect:/user";
 		}
 		return "login";
