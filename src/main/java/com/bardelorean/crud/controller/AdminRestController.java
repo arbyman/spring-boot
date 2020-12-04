@@ -28,6 +28,7 @@ public class AdminRestController {
 
 	@PostMapping(value = "/users")
 	public User addUser(@ModelAttribute User user) {
+
 		return userService.save(user);
 	}
 

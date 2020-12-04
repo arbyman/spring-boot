@@ -65,7 +65,7 @@
                     <div class="card-header">New User Form</div>
                     <div class="container card-body">
                         <div class="row w-100 justify-content-center">
-                            <form name="new" id="new-user-form" class="w-25" th:action="@{/admin/users}" th:method="POST" th:object="${user}">
+                            <form name="new" id="new-user-form" class="w-25" th:object="${user}">
                                 <div class="form-group text-center">
                                     <label for="new-username" class="font-weight-bold">First name</label>
                                     <input type="text" th:field="*{username}" id="new-username" class="form-control" required>
@@ -83,7 +83,7 @@
                                     <input type="password" th:field="*{password}" id="new-password" class="form-control">
 
                                     <label for="new-role" class="font-weight-bold">Role</label>
-                                    <select th:field="*{roles}" multiple class="form-control" id="new-role" size="2">
+                                    <select th:field="*{rolesList}" multiple class="form-control" id="new-role" size="2">
                                         <option th:value="ROLE_ADMIN" th:text="ADMIN"></option>
                                         <option th:value="ROLE_USER" th:text="USER"></option>
                                     </select>
@@ -128,7 +128,7 @@
                             <input name="password" type="password" th:field="*{password}" id="edit-password" class="form-control" required>
 
                             <label for="edit-role" class="font-weight-bold">Role</label>
-                            <select name="roles" th:field="*{roles}" multiple class="form-control" id="edit-role" size="2">
+                            <select th:field="*{rolesList}" multiple class="form-control" id="edit-role" size="2">
                                 <option th:value="ROLE_ADMIN" th:text="ADMIN"></option>
                                 <option th:value="ROLE_USER" th:text="USER"></option>
                             </select>

@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/bootstrap/**").permitAll()
 					.antMatchers("/popper/**").permitAll()
 					.antMatchers("/jquery/**").permitAll()
+//					.antMatchers("/init").permitAll()
 					.antMatchers("/admin/**").access("hasRole('ADMIN')")
 					.antMatchers("/user/**").access("hasAnyRole('ADMIN', 'USER')")
 					.anyRequest().authenticated()

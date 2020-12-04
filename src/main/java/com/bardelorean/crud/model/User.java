@@ -21,36 +21,26 @@ public class User implements UserDetails {
 	private byte age;
 	@Column(nullable = false)
 	private String password;
+	@Transient
+	private Set<String> rolesList;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "user_roles",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id")
+			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id")
 	)
 	private Set<Role> roles;
-
-	@Transient
-	private String isAdmin;
 
 	public User() {
 	}
 
-	public User(String username, String lastname, String email, byte age, String password, Set<Role> roles, String isAdmin) {
+	public User(String username, String lastname, String email, byte age, String password, Set<Role> roles) {
 		this.username = username;
 		this.lastname = lastname;
 		this.email = email;
 		this.age = age;
 		this.password = password;
 		this.roles = roles;
-		this.isAdmin = isAdmin;
-	}
-
-	public String getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(String isAdmin) {
-		this.isAdmin = isAdmin;
 	}
 
 	public Long getId() {
@@ -106,6 +96,14 @@ public class User implements UserDetails {
 	@Override
 	public String getPassword() {
 		return password;
+	}
+
+	public Set<String> getRolesList() {
+		return rolesList;
+	}
+
+	public void setRolesList(Set<String> rolesList) {
+		this.rolesList = rolesList;
 	}
 
 	public String getLastname() {

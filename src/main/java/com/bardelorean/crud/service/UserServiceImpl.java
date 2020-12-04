@@ -1,5 +1,6 @@
 package com.bardelorean.crud.service;
 
+import com.bardelorean.crud.model.Role;
 import com.bardelorean.crud.model.User;
 import com.bardelorean.crud.repository.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -7,15 +8,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
+	private final RoleService roleService;
 
-	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.roleService = roleService;
 	}
 
 	public User findByEmail(String email) {
@@ -43,6 +48,10 @@ public class UserServiceImpl implements UserService {
 
 	public User save(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		Set<Role> roles = user.getRolesList().stream()
+				.map(roleService::findByRole)
+				.collect(Collectors.toSet());
+		user.setRoles(roles);
 		return userRepository.save(user);
 	}
 

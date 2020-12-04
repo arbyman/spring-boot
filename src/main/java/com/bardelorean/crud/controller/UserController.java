@@ -2,6 +2,7 @@ package com.bardelorean.crud.controller;
 
 import com.bardelorean.crud.model.Role;
 import com.bardelorean.crud.model.User;
+import com.bardelorean.crud.service.RoleService;
 import com.bardelorean.crud.service.UserService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,9 +18,11 @@ import java.util.Set;
 @Controller
 public class UserController {
 	private final UserService userService;
+	private final RoleService roleService;
 
-	public UserController(UserService userService) {
+	public UserController(UserService userService, RoleService roleService) {
 		this.userService = userService;
+		this.roleService = roleService;
 	}
 
 	@GetMapping("/user")
@@ -29,12 +32,22 @@ public class UserController {
 		return "user";
 	}
 
-	@GetMapping
-	public String index() {
+//	@GetMapping("/init")
+//	public String initUsers() {
+//		Role adminRole = new Role("ROLE_ADMIN");
+//		Role userRole = new Role("ROLE_USER");
+//		roleService.save(adminRole);
+//		roleService.save(userRole);
 //		Set<Role> roles = new HashSet<>();
-//		roles.add(new Role("ROLE_ADMIN"));
-//		User admin = new User("admin", "admin", "admin@mail.ru", (byte) 33, "pass", roles, "ADMIN");
+//		roles.add(roleService.findByRole("ROLE_ADMIN"));
+//		roles.add(roleService.findByRole("ROLE_USER"));
+//		User admin = new User("admin", "adminov", "admin@mail.ru", (byte) 33, "pass", roles);
 //		userService.save(admin);
+//		return "redirect:/";
+//	}
+
+	@GetMapping("/")
+	public String index() {
 		return "redirect:/login";
 	}
 

@@ -70,7 +70,7 @@ const openEditModal = id => () => {
     form.age.value = age;
     form.email.value = email;
     const nameRoles = roles.map(({ role }) => role);
-    for (let option of form.roles.options) {
+    for (let option of form.rolesList.options) {
         option.selected = nameRoles.includes(option.value);
     }
     const btn = document.querySelector("button[form='edit-user-form']");
